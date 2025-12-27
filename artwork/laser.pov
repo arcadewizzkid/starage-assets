@@ -37,10 +37,10 @@ light_source { <60.00, -20.00, -5.00> color Gray50 }
 
 #include "wizzpov.h"
 
-// object { 
-//    Future_Sky 
-//    translate <0, 4, 4>
-// }
+object { 
+    Future_Sky 
+    translate <0, -4, 4>
+}
 
 #declare R = 0.2;
 
@@ -67,8 +67,8 @@ texture {
 union { 
    LaserFinal
        
-   // texture {Future_Chrome}     
-   texture {Texture}            
+   texture {Future_Chrome}     
+   // texture {Texture}            
    no_shadow 
    
    // animation
