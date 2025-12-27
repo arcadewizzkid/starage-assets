@@ -4,6 +4,7 @@ mkdir joined
 montage output/ship*.png -tile 16x16 -background black -geometry +0+0  joined/ship.png
 montage output/bullet*.png -tile 6x6  -geometry +0+0  joined/bullet.png
 montage output/missle*.png -tile 12x12  -geometry +0+0  joined/missle.png
+montage output/laser*.png -tile 6x6  -geometry +0+0  joined/laser.png
 montage output/exp-big*.png -tile 16x16  -geometry +0+0  joined/exp-big.png
 montage output/exp-med*.png -tile 14x14  -geometry +0+0  joined/exp-med.png
 montage output/exp-small*.png -tile 10x10  -geometry +0+0  joined/exp-small.png
