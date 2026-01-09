@@ -9,6 +9,7 @@ global_settings { assumed_gamma 2.2 }
 #include "colors.inc"
 #include "textures.inc"
 #include "shapes.inc"
+#include "shapes2.inc"
 
 camera {
     location <0.0, 0.0, -4.5>
@@ -29,42 +30,62 @@ object {
     translate <0, 4, 4>
 }
 
-#declare Rotor = union {
+#declare cut_width = 0.10;
+#declare box_height = 10;
+
+#declare OuterShell = union {
   difference {
-    torus { 3, .7 }
-    torus { 3.7, .2 pigment { red .65 green .65 blue .75 } }
+    object {
+        Octahedron
+        rotate -45*y
+        scale <2, 3, 2> 
+    }
+    object {
+        Octahedron
+        rotate -45*y
+        scale <2 * 0.95, 3 * 0.95, 2 * 0.95> 
+    }
+    box {<1 * cut_width, box_height, box_height>, <-1 * cut_width, -box_height, -box_height>}
+    box {<box_height, box_height, 1 * cut_width>, <-box_height, -box_height, -1 * cut_width>}
   }
-  cylinder { <0, 0, -3>, <0, 0, 3>, .5 }
-  cylinder { <-3, 0, 0>, <3, 0, 0>, .5 }
-//  pigment { Gray65 }
-//  finish { phong .4 reflection .1 }
+}
+
+#declare InnerGlass = object {
+    object {
+        Octahedron
+        rotate -45*y
+        scale <2 * 0.95, 3 * 0.95, 2 * 0.95> 
+    }
+    material {M_Glass3}
+    no_shadow 
 }
 
 #declare lum = 1 - .7 * sin(radians(360 * clock * 4));
 #declare ilum = 1 - .7 * sin(radians(180 + 360 * clock * 4));
 #declare light_globe = 0.25;
 
-#declare Station = union {
-  object { Rotor }
+#declare GlowEye = object {
   sphere {
-    <0, .7, 3>, light_globe
-    pigment { Green*ilum }
-    finish { ambient 1 diffuse 0 }
-  }
-  sphere {
-    <0, .7, -3>, light_globe
-    pigment { Red*ilum }
+    <0, 0, 0>, light_globe
+//    pigment { Green*ilum }
+    pigment { Red*1 }
     finish { ambient 1 diffuse 0 }
   }
 }
 
-#declare ScaledStation = object { 
-    Station 
-    scale 0.4 
+#declare Final = union {
+  object { OuterShell }
+  //object { InnerGlass }
+  object { GlowEye }
+}
+
+#declare ScaledFinal = object { 
+    Final 
+    scale 0.3 
 }
 
 union { 
-   ScaledStation
+   ScaledFinal
        
    texture {Future_Chrome}          
    no_shadow 
@@ -74,5 +95,5 @@ union {
    rotate -360*clock*y 
           
    // view angle
-   rotate -25*x
+   rotate -10*x
 }

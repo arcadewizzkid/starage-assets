@@ -18,9 +18,9 @@ montage output/cship*.png -tile 12x12  -geometry +0+0  joined/cship.png
 
 montage output/gyro*.png -tile 10x10  -geometry +0+0  joined/gyro.png
 montage output/station*.png -tile 9x9  -geometry +0+0  joined/station.png
-montage output/doom*.png -tile 9x9  -geometry +0+0  joined/doom.png
-montage output/sphero*.png -tile 9x9  -geometry +0+0  joined/sphero.png
-montage output/tetro*.png -tile 9x9  -geometry +0+0  tetro/station.png
+montage output/doom*.png -tile 8x8  -geometry +0+0  joined/doom.png
+montage output/sphero*.png -tile 8x8  -geometry +0+0  joined/sphero.png
+montage output/tetro*.png -tile 8x8  -geometry +0+0  joined/tetro.png
 
 montage output/powerup*.png -tile 8x8  -geometry +0+0  joined/powerup.png
 
