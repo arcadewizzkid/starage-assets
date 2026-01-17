@@ -54,7 +54,7 @@ object {
     no_shadow 
 }
 
-#declare lum = 1 - .7 * sin(radians(360 * clock));
+#declare lum = 0.9 - .3 * sin(radians(360 * clock));
 #declare ilum = 1 - .7 * sin(radians(180 + 360 * clock));
 #declare light_globe = 0.30;
 

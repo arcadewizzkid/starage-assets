@@ -35,7 +35,7 @@ object {
 
 #declare OuterShell = union {
   difference {
-    // sphere { <0, 0, 20>, 20 }
+   sphere { <0, 0, 0>, 3 - R }
     box {<3, 3, 0>, <-3, -3, 3>}
   }
 //  cylinder { <0, 0, -3>, <0, 0, 3>, .5 }
