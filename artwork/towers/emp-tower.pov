@@ -27,52 +27,65 @@ light_source { <60.00, -20.00, -5.00> color Gray50 }
 object { 
     Future_Sky 
     scale <1,1,4> 
-    translate <0, 4, 6>
+    rotate x*-20
+    translate <0, 2, 6>
 }
 
-#declare box_width = 0.20;
+#declare R = 0.30;
 
 #declare OuterShell = union {
   difference {
-    sphere { <0, 0, 0>, 3 }
-    sphere { <0, 0, 0>, 3 - box_width }
-    box {<1 * box_width, 3, 3>, <-1 * box_width, -3, -3>}
-    box {<3, 3, 1 * box_width>, <-3, -3, -1 * box_width>}
+    object {
+        torus  { 3, R }    
+        rotate 90*x
+    }
+    box {<3, 3, 0>, <-3, -3, 3>}
   }
 //  cylinder { <0, 0, -3>, <0, 0, 3>, .5 }
 //  cylinder { <-3, 0, 0>, <3, 0, 0>, .5 }
 //  pigment { Gray65 }
 //  finish { phong .4 reflection .1 }
+    scale <1,1,0.1>
 }
 
-#declare GlassSphere = object {
-    sphere { <0, 0, 0>, 3 - box_width }
-    material {M_Glass3}
-    no_shadow 
-}
+//#declare GlassSphere = object {
+//   sphere { <0, 0, 0>, 3 - box_width }
+//    material {M_Glass3}
+//    no_shadow 
+//}
 
 #declare lum = 1 - .7 * sin(radians(360 * clock * 4));
 #declare ilum = 1 - .7 * sin(radians(180 + 360 * clock * 4));
-#declare light_globe = 0.25;
+#declare light_globe = 0.30;
 
 #declare GlowEye = object {
   sphere {
     <0, 0, 0>, light_globe
-//    pigment { Green*ilum }
-    pigment { Green*1 }
+    pigment { Yellow*lum }
     finish { ambient 1 diffuse 0 }
   }
 }
 
+//#declare Barrel = object {
+//    cylinder {<-0,0,-R> <0, 3, -R> R}
+//}
+
+#declare B = 0.20 * lum;
+
 #declare Final = union {
-  object { OuterShell }
-  object { GlassSphere }
+    object { OuterShell scale <1,1,1> }
+    object { OuterShell scale <1-B*1,1-B*1,1-B*1> }
+    object { OuterShell scale <1-B*2,1-B*2,1-B*2> }
+    object { OuterShell scale <1-B*3,1-B*3,1-B*3> }
+    object { OuterShell scale <1-B*4,1-B*4,1-B*4> }
+//  Barrel
+//  object { GlassSphere }
   object { GlowEye }
 }
 
 #declare ScaledFinal = object { 
     Final 
-    scale 0.4 
+    scale 0.5 
 }
 
 union { 
@@ -82,9 +95,9 @@ union {
    no_shadow 
    
    // animation
-   rotate -90*y
-   rotate -360*clock*y 
+   // rotate -90*y
+   rotate -360*clock*z 
           
    // view angle
-   rotate -45*x
+   // rotate -45*x
 }
