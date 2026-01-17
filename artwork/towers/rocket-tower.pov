@@ -45,20 +45,20 @@ object {
     scale <1,1,0.1>
 }
 
-//#declare GlassSphere = object {
-//   sphere { <0, 0, 0>, 3 - box_width }
-//    material {M_Glass3}
-//    no_shadow 
-//}
+#declare GlassSphere = object {
+   sphere { <0, 0, 0>, 3 - R }
+    material {M_Glass3}
+    no_shadow 
+}
 
-#declare lum1 = 1 - .7 * sin(radians(360 * clock * 4));
-#declare lum2 = 1 - .7 * sin(radians(45 + 360 * clock * 4));
-#declare lum3 = 1 - .7 * sin(radians(90 + 360 * clock * 4));
-#declare lum4 = 1 - .7 * sin(radians(135 + 360 * clock * 4));
-#declare lum5 = 1 - .7 * sin(radians(180 * clock * 4));
-#declare lum6 = 1 - .7 * sin(radians(225 + 360 * clock * 4));
-#declare lum7 = 1 - .7 * sin(radians(270 + 360 * clock * 4));
-#declare lum8 = 1 - .7 * sin(radians(315 + 360 * clock * 4));
+#declare lum1 = 1 - .7 * sin(radians(360 * clock));
+#declare lum2 = 1 - .7 * sin(radians(45 + 360 * clock));
+#declare lum3 = 1 - .7 * sin(radians(90 + 360 * clock));
+#declare lum4 = 1 - .7 * sin(radians(135 + 360 * clock));
+#declare lum5 = 1 - .7 * sin(radians(180 * clock));
+#declare lum6 = 1 - .7 * sin(radians(225 + 360 * clock));
+#declare lum7 = 1 - .7 * sin(radians(270 + 360 * clock));
+#declare lum8 = 1 - .7 * sin(radians(315 + 360 * clock));
 
 #declare light_globe = 0.30;
 
@@ -136,7 +136,7 @@ object {
   object { Barrel rotate z*45}
   object { Barrel rotate z*-45}
   object { Barrel rotate z*90}
-//  object { GlassSphere }
+  object { GlassSphere }
   object { GlowEye1 translate <0, 2, -R*2> rotate z*00 }
   object { GlowEye2 translate <0, 2, -R*2> rotate z*45 }
   object { GlowEye3 translate <0, 2, -R*2> rotate z*90 }

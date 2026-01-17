@@ -45,11 +45,11 @@ object {
     scale <1,1,0.1>
 }
 
-//#declare GlassSphere = object {
-//   sphere { <0, 0, 0>, 3 - box_width }
-//    material {M_Glass3}
-//    no_shadow 
-//}
+#declare GlassSphere = object {
+   sphere { <0, 0, 0>, 3 - R }
+    material {M_Glass3}
+    no_shadow 
+}
 
 #declare lum = 1 - .7 * sin(radians(360 * clock * 4));
 #declare ilum = 1 - .7 * sin(radians(180 + 360 * clock * 4));
@@ -79,7 +79,7 @@ object {
 #declare Final = union {
   object { OuterShell }
   Barrel
-//  object { GlassSphere }
+  object { GlassSphere }
   object { GlowEyeL }
   object { GlowEyeR }
 }

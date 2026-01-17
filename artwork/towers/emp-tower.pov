@@ -48,14 +48,14 @@ object {
     scale <1,1,0.1>
 }
 
-//#declare GlassSphere = object {
-//   sphere { <0, 0, 0>, 3 - box_width }
-//    material {M_Glass3}
-//    no_shadow 
-//}
+#declare GlassSphere = object {
+   sphere { <0, 0, 0>, 3 - R }
+    material {M_Glass3}
+    no_shadow 
+}
 
-#declare lum = 1 - .7 * sin(radians(360 * clock * 4));
-#declare ilum = 1 - .7 * sin(radians(180 + 360 * clock * 4));
+#declare lum = 1 - .7 * sin(radians(360 * clock));
+#declare ilum = 1 - .7 * sin(radians(180 + 360 * clock));
 #declare light_globe = 0.30;
 
 #declare GlowEye = object {
@@ -79,7 +79,7 @@ object {
     object { OuterShell scale <1-B*3,1-B*3,1-B*3> }
     object { OuterShell scale <1-B*4,1-B*4,1-B*4> }
 //  Barrel
-//  object { GlassSphere }
+  object { GlassSphere }
   object { GlowEye }
 }
 

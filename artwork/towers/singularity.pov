@@ -1,155 +1,103 @@
-// Black Hole with Accretion Disk
-// POV-Ray 3.7
+// Space station
+// 10/1994 Christian Perle <christian.perle@tu-clausthal.de>
+// POV version: 2.0 or higher
+// Copying policy: LGPL (see file COPYING)
 
-#version 3.7;
+global_settings { assumed_gamma 2.2 }
 
-global_settings {
-  assumed_gamma 1.0
-  max_trace_level 10
-}
 
-// Camera
+#include "colors.inc"
+#include "textures.inc"
+#include "shapes.inc"
+
 camera {
-  location <0, 3, -8>
-  look_at <0, 0, 0>
-  angle 45
+    location <0.0, 0.0, -4.5>
+    direction z*1.3
+//    right 4/3*x
+    right x
+    up y
+    look_at <0.0, -0.0, 0.00>
 }
 
-// Lights
-light_source {
-  <10, 20, -30>
-  color rgb <1, 1, 1>
+light_source { <-60.00, 20.00, -5.00> White}
+light_source { <60.00, -20.00, -5.00> color Gray50 }
+
+#include "wizzpov.h"
+
+object { 
+    Future_Sky 
+    scale <1,1,4> 
+    rotate x*-20
+    translate <0, 2, 6>
 }
 
-light_source {
-  <-15, 10, -20>
-  color rgb <0.3, 0.3, 0.4>
-}
+#declare R = 0.30;
 
-// Starfield background
-sky_sphere {
-  pigment {
-    granite
-    color_map {
-      [0.0 color rgb <0, 0, 0>]
-      [0.5 color rgb <0, 0, 0>]
-      [0.6 color rgb <0.8, 0.8, 1>]
-      [1.0 color rgb <1, 1, 1>]
+#declare OuterShell = union {
+  difference {
+    object {
+        torus  { 3, R }    
+        rotate -20*x
     }
-    scale 0.01
+    // box {<3, 3, 0>, <-3, -3, 3>}
+  }
+//  cylinder { <0, 0, -3>, <0, 0, 3>, .5 }
+//  cylinder { <-3, 0, 0>, <3, 0, 0>, .5 }
+//  pigment { Gray65 }
+//  finish { phong .4 reflection .1 }
+    scale <1,1,1>
+}
+
+#declare GlassSphere = object {
+   sphere { <0, 0, 0>, 3 * 0.6 }
+    material {M_Glass3}
+    no_shadow 
+}
+
+#declare lum = 1 - .7 * sin(radians(360 * clock));
+#declare ilum = 1 - .7 * sin(radians(180 + 360 * clock));
+#declare light_globe = 3 * 0.2;
+
+#declare GlowEye = object {
+  sphere {
+    <0, 0, 0>, light_globe
+    pigment { Black*lum }
+    finish { ambient 1 diffuse 0 }
   }
 }
 
-// Black hole event horizon (perfectly black sphere)
-sphere {
-  <0, 0, 0>, 1
-  pigment { color rgb <0, 0, 0> }
-  finish {
-    ambient 0
-    diffuse 0
-  }
-  no_shadow
+//#declare Barrel = object {
+//    cylinder {<-0,0,-R> <0, 3, -R> R}
+//}
+
+#declare B = 0.20 * lum;
+
+#declare Final = union {
+    object { OuterShell scale <1,1,1> }
+    object { OuterShell scale <1-B*1,1-B*1,1-B*1> }
+    object { OuterShell scale <1-B*2,1-B*2,1-B*2> }
+    object { OuterShell scale <1-B*3,1-B*3,1-B*3> }
+    object { OuterShell scale <1-B*4,1-B*4,1-B*4> }
+//  Barrel
+  object { GlassSphere }
+  object { GlowEye }
 }
 
-// Photon sphere glow (gravitational lensing effect)
-sphere {
-  <0, 0, 0>, 1.5
-  pigment { color rgbt <1, 0.8, 0.6, 0.95> }
-  finish {
-    ambient 1.5
-    diffuse 0
-  }
-  hollow
-  no_shadow
+#declare ScaledFinal = object { 
+    Final 
+    scale 0.48 
 }
 
-// Outer glow halo
-sphere {
-  <0, 0, 0>, 2.0
-  pigment { color rgbt <1, 0.6, 0.3, 0.98> }
-  finish {
-    ambient 0.8
-    diffuse 0
-  }
-  hollow
-  no_shadow
-}
-
-// Accretion disk
-disc {
-  <0, 0, 0>, <0, 1, 0>, 4.5, 1.6
-  pigment {
-    radial
-    frequency 8
-    color_map {
-      [0.0 color rgbt <1, 0.3, 0.1, 0.3>]
-      [0.3 color rgbt <1, 0.5, 0.2, 0.4>]
-      [0.5 color rgbt <1, 0.7, 0.3, 0.5>]
-      [0.7 color rgbt <0.8, 0.4, 0.1, 0.6>]
-      [1.0 color rgbt <1, 0.3, 0.1, 0.3>]
-    }
-    turbulence 0.5
-    scale 2
-  }
-  finish {
-    ambient 0.6
-    diffuse 0.4
-    emission 0.8
-  }
-  normal {
-    ripples 0.3
-    scale 0.5
-  }
-  rotate <0, 0, 0>
-}
-
-// Inner accretion disk (hotter, brighter)
-disc {
-  <0, 0, 0>, <0, 1, 0>, 2.2, 1.6
-  pigment {
-    radial
-    frequency 12
-    color_map {
-      [0.0 color rgbt <1, 1, 0.8, 0.2>]
-      [0.4 color rgbt <1, 0.8, 0.4, 0.3>]
-      [0.7 color rgbt <1, 0.5, 0.2, 0.4>]
-      [1.0 color rgbt <1, 1, 0.8, 0.2>]
-    }
-    turbulence 0.7
-  }
-  finish {
-    ambient 1.2
-    diffuse 0.2
-    emission 1.5
-  }
-  rotate <0, 0, 0>
-}
-
-// Particle jets (slightly visible)
-cone {
-  <0, 1.6, 0>, 0.2
-  <0, 8, 0>, 0.6
-  pigment {
-    color rgbt <0.6, 0.8, 1, 0.85>
-  }
-  finish {
-    ambient 0.8
-    diffuse 0.1
-    emission 0.5
-  }
-  no_shadow
-}
-
-cone {
-  <0, -1.6, 0>, 0.2
-  <0, -8, 0>, 0.6
-  pigment {
-    color rgbt <0.6, 0.8, 1, 0.85>
-  }
-  finish {
-    ambient 0.8
-    diffuse 0.1
-    emission 0.5
-  }
-  no_shadow
+union { 
+   ScaledFinal
+       
+   texture {Future_Chrome}          
+   no_shadow 
+   
+   // animation
+   // rotate -90*y
+   // rotate -360*clock*z 
+          
+   // view angle
+   // rotate -45*x
 }
