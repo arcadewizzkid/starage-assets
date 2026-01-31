@@ -32,13 +32,15 @@ object {
 }
 
 #declare R = 0.30;
+#declare L = 3;
+#declare H = 5;
 
 #declare Wing = union { 
     object {
-       Connect_Spheres(<0, -4, 0>, 2, <0, 4, 0>, .5)  
+       Connect_Spheres(<0, -L, 0>, 2.5, <0, H, 0>, .5)  
        }
-   sphere {<0, -4, 0>, 2} 
-   sphere{ <0, 4, 0>, .5}
+   sphere {<0, -L, 0>, 2.5} 
+   sphere{ <0, H, 0>, .5}
 }
 
 #declare OuterShell = union {
