@@ -33,24 +33,16 @@ object {
 
 #declare R = 0.30;
 
-#declare Wing = union { 
-    object {
-       Connect_Spheres(<0, -4, 0>, 2, <0, 4, 0>, .5)  
-       }
-   sphere {<0, -4, 0>, 2} 
-   sphere{ <0, 4, 0>, .5}
-}
-
 #declare OuterShell = union {
   difference {
-    object { Wing scale <1,.5,.1> }
-    //box {<3, 3, 0>, <-3, -3, 3>}
+    sphere { <0, 0, 0>, 3 }
+    box {<3, 3, 0>, <-3, -3, 3>}
   }
 //  cylinder { <0, 0, -3>, <0, 0, 3>, .5 }
 //  cylinder { <-3, 0, 0>, <3, 0, 0>, .5 }
 //  pigment { Gray65 }
 //  finish { phong .4 reflection .1 }
-    scale <0.7,0.7,0.1>
+    scale <1,1,0.1>
 }
 
 #declare GlassSphere = object {
@@ -66,7 +58,7 @@ object {
 
 #declare GlowEyeL = object {
   sphere {
-    <-0.7, -0.7, -0.3>, light_globe
+    <-1, 0, -0.3>, light_globe
     pigment { light_color*1 }
     finish { ambient 1 diffuse 0 }
   }
@@ -74,23 +66,19 @@ object {
 
 #declare GlowEyeR = object {
   sphere {
-    <0.7, -0.7, -0.3>, light_globe
+    <1, 0, -0.3>, light_globe
     pigment { light_color*1 }
     finish { ambient 1 diffuse 0 }
   }
 }
 
-#declare B = 0.28;
-
 #declare Barrel = object {
-    cylinder {<-0,-3,-B> <0, 3, -B> R}
+    cylinder {<-0,-3,-R> <0, 3, -R> R}
 }
 
 #declare Final = union {
-  difference { 
-    object { OuterShell } 
-    object { Barrel } 
-  }
+  object { OuterShell }
+  Barrel
   object { GlassSphere }
   object { GlowEyeL }
   object { GlowEyeR }
